@@ -40,7 +40,7 @@ module.exports = {
             var text = todo.text.toLowerCase();
 
             return searchText.length === 0 || text.indexOf(searchText) > -1;
-            
+
         });
 
         // Sort todos with non-completed first
