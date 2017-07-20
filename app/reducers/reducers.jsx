@@ -32,7 +32,6 @@ export var todosReducer = (state = [], action) => {
                     completedAt: undefined
                 }
             ];
-            // add case for TOGGLE_TODO, completed equal to opposite value & updatedCompletedAt
         case 'TOGGLE_TODO':
             return state.map((todo) => {
                 if (todo.id === action.id) {
@@ -46,7 +45,6 @@ export var todosReducer = (state = [], action) => {
                     }
                 }
             });
-            return state;
         default:
             return state;
     }
