@@ -4,31 +4,35 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var AddTodo = require('AddTodo');
+
+//we want to add the raw react component the addTodo property.
+var {AddTodo} = require('AddTodo');
 
 describe('AddTodo', () => {
     it('should exist', () => {
         expect(AddTodo).toExist();
     });
 
-    it('should call onAddTodo prop with valid data', () => {
+    it('should dispatch ADD_TODO with valid data', () => {
         var spy = expect.createSpy();
         var todoText = 'Check mail';
-        var addTodo = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy} />);
-
+        var action = {
+            type: 'ADD_TODO',
+            text: todoText
+        }
+        var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
         var $el = $(ReactDOM.findDOMNode(addTodo));
 
         addTodo.refs.todoText.value = 'Check mail';
-
         TestUtils.Simulate.submit($el.find('form')[0]);
 
-        expect(spy).toHaveBeenCalledWith(todoText);
+        expect(spy).toHaveBeenCalledWith(action);
     });
 
-    it('should not call onAddTodo prop with invalid input', () => {
+    it('should not dispatch ADD_TODO with invalid input', () => {
         var spy = expect.createSpy();
         var todoText = '';
-        var addTodo = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy} />);
+        var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
 
         var $el = $(ReactDOM.findDOMNode(addTodo));
 
