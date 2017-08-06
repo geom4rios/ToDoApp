@@ -51,33 +51,33 @@ describe('Reducers', () => {
         // defined todos array with realistic todo item
         // generate action
         // call reducer and assert completed flipped.
-        it('should toggle todo', () => {
-            var todosArray = [
+        it('should update todo', () => {
+            var todos = [
                 {
-                    id: 1,
+                    id: '123',
                     text: "Eat",
                     completed: false,
                     createdAt: moment().unix(),
-                    completedAt: undefined
-                },
-                {
-                    id: 2,
-                    text: "Walk",
-                    completed: true,
-                    createdAt: moment().unix(),
-                    completedAt: undefined
+                    completedAt: 125
                 }
-            ]
+            ];
+
+            var updates = {
+                completed: false,
+                completedAt: null
+            }
 
             var action = {
-                type: 'TOGGLE_TODO',
-                id: 2
+                type: 'UPDATE_TODO',
+                id: todos[0].id,
+                updates
             };
 
-            var res = reducer.todosReducer(df(todosArray), df(action));
+            var res = reducer.todosReducer(df(todos), df(action));
 
-            expect(res[1].completed).toEqual(false);
-            expect(res[1].completedAt).toEqual(undefined);
+            expect(res[0].completed).toEqual(updates.completed);
+            expect(res[0].completedAt).toEqual(updates.completedAt);
+            expect(res[0].text).toEqual(todos[0].text);
         });
 
         it ('should add existing todos ', () => {

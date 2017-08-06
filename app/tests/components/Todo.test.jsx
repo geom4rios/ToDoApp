@@ -4,9 +4,12 @@ var expect = require('expect');
 var $ = require('jquery');
 var TestUtils = require('react-addons-test-utils');
 
+import * as actions from 'actions';
 
 //need to pull the todo react component which is accesible via the todo properties.
-var {Todo} = require('Todo');
+//var {Todo} = require('Todo');
+
+import {Todo} from 'Todo';
 
 describe('Todo', () => {
     it('should exist', () => {
@@ -19,15 +22,14 @@ describe('Todo', () => {
             text: 'Write todo.test.jsx test',
             completed: true
         };
+        var action = actions.startToggleTodo(todoData.id, todoData.completed);
+
         var spy = expect.createSpy();
         var todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy} />);
         var $el = $(ReactDOM.findDOMNode(todo));
 
         TestUtils.Simulate.click($el[0]);
 
-        expect(spy).toHaveBeenCalledWith({
-            type: 'TOGGLE_TODO',
-            id: todoData.id
-        });
+        expect(spy).toHaveBeenCalledWith(action);
     });
 });
